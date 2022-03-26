@@ -35,6 +35,8 @@ body {
   width: 540px;
   height: 540px;
   border: solid black;
+  align-items: center;
+  justify-content: center;
 }
 
 .score_title {
