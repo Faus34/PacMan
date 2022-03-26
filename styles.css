@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Colores y estilos root */
+
+:root {
+  --Pacman-yellow: #ffff00;
+  --Neon-blue: #1919a6;
+  --Bluebonnet: #2121de;
+  --Tumbleweed: #dea185;
+  --Pacman-red: #fd0000;
+  --Electric-green: #00ff00;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 540px 1fr;
+  grid-template-rows: 1fr 540px 1fr;
+  grid-template-areas:
+    "header header header"
+    "left-sider main right-sider"
+    "left-sider main right-sider";
+}
+
+.container {
+  grid-area: main;
+  display: flex;
+  flex-wrap: wrap;
+  /* 360px es el mínimo para celulares, 720px es mas para tablet o PC un punto medio sería 540px. */
+  width: 540px;
+  height: 540px;
+  border: solid black;
+}
+
+.score_title {
+  grid-area: left-sider;
+}
+
