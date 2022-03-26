@@ -6,8 +6,12 @@ document.addEventListener(DOMContentLoaded, () => { //ejecuta el Script cuando e
 
     const layout = []; //Layout numérico del board
 
+    //0 ---> Espacio vacio (clase= vacio)
+    //1 ---> Pared (clase=pared)
+    //2 ---> Migaja (clase= miga)
+    //3 ---> Queso (Clase= queso)
 
-
+        
 
 
 
