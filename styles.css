@@ -22,7 +22,7 @@ body {
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 540px 1fr;
-  grid-template-rows: 2fr 540px 1fr;
+  grid-template-rows: 3fr 540px 1fr;
   grid-template-areas:
     "header header header"
     "left-sider main right-sider"
@@ -33,7 +33,7 @@ body {
 
 .logo {
   grid-area: header;
-  width: 540px;
+  width: 270px;
   height: 100%;
   background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pacmanLogo-min.png?alt=media&token=653f674e-bdc7-463c-ac03-f63198ed10c2);
   background-repeat: no-repeat;
