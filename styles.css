@@ -23,23 +23,18 @@ body {
   display: grid;
   grid-template-columns: 1fr 540px 1fr;
   grid-template-rows: 2fr 540px 1fr;
+  grid-template-areas:
+    "header header header"
+    "left-sider main right-sider"
+    "footer footer footer";
   justify-content: center;
+  grid-gap: 15px;
 }
 
-/* .header-logo {
-  grid-column: 2 / 3;
-  width: 520px;
-  height: 50%;
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pacmanLogo-min.png?alt=media&token=653f674e-bdc7-463c-ac03-f63198ed10c2");
-  background-repeat: no-repeat;
-  background-size: cover;
-} */
-
 .logo {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-  width: 340px;
-  height: 140px;
+  grid-area: header;
+  width: 540px;
+  height: 100%;
   background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pacmanLogo-min.png?alt=media&token=653f674e-bdc7-463c-ac03-f63198ed10c2);
   background-repeat: no-repeat;
   background-size: contain;
@@ -48,8 +43,7 @@ body {
 }
 
 .container {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
+  grid-area: main;
   display: flex;
   flex-wrap: wrap;
   /* 360px es el mínimo para celulares, 720px es mas para tablet o PC un punto medio sería 540px. */
@@ -61,8 +55,9 @@ body {
 }
 
 .score_title {
-  grid-column: 2 / 3;
-  grid-row: 3 / 4;
+  grid-area: header;
+  justify-self: center;
+  align-self: flex-end;
   color: white;
 }
 
