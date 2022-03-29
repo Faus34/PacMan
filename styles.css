@@ -72,11 +72,22 @@ body {
   height: 20px;
   background-color: var(--Neon-blue);
 }
-
-.miga {
+/* El background de la migaja */
+.miga-back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
+  background-color: black;
+}
+
+.miga {
+  margin: 0;
+  width: 7px;
+  height: 7px;
   background-color: var(--Tumbleweed);
+  border-radius: 10px;
 }
 
 .queso {
