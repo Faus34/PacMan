@@ -61,7 +61,8 @@ body {
   color: white;
 }
 
-.vacio {
+.vacio,
+.casa-fantasma {
   width: 20px;
   height: 20px;
   background-color: black;
@@ -73,7 +74,7 @@ body {
   background-color: var(--Neon-blue);
 }
 /* El background de la migaja */
-.miga-back {
+.subElement-back {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,7 +92,33 @@ body {
 }
 
 .queso {
+  margin: 0;
+  width: 14px;
+  height: 14px;
+  background-color: var(--Tumbleweed);
+  border-radius: 10px;
+}
+
+.fantasma {
   width: 20px;
   height: 20px;
-  background-color: var(--Pacman-yellow);
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/Vulnerable-ghost.png?alt=media&token=10081f44-2851-4d05-a7ed-6d8b76d66033);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.pinky {
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pinky-min.png?alt=media&token=d5d87357-a097-4b46-9a9e-7e0a82c12210);
+}
+
+.blue {
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/blue-min.png?alt=media&token=24c74a26-a437-47c1-95bd-27c9c41c8b7b);
+}
+
+.red {
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/Red-min.png?alt=media&token=240e8076-4d60-4787-a132-431edd416356);
+}
+
+.orange {
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/orange-min.png?alt=media&token=188a6d64-e7dc-4f13-a1e5-b433011a2e3d);
 }
