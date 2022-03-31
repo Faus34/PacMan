@@ -3,10 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 /* Colores y estilos root */
 
 :root {
+  --just-white: #fefefe;
   --Pacman-yellow: #ffff00;
   --Neon-blue: #1919a6;
   --Bluebonnet: #2121de;
@@ -22,9 +22,9 @@ body {
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 540px 1fr;
-  grid-template-rows: 3fr 540px 1fr;
+  grid-template-rows: 1fr 540px 1fr;
   grid-template-areas:
-    "header header header"
+    "header-l header header-r"
     "left-sider main right-sider"
     "footer footer footer";
   justify-content: center;
@@ -32,14 +32,11 @@ body {
 }
 
 .logo {
-  grid-area: header;
+  grid-area: footer;
   width: 270px;
   height: 100%;
-  background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pacmanLogo-min.png?alt=media&token=653f674e-bdc7-463c-ac03-f63198ed10c2);
-  background-repeat: no-repeat;
-  background-size: contain;
   justify-self: center;
-  align-self: flex-start;
+  align-self: center;
 }
 
 .container {
@@ -54,11 +51,32 @@ body {
   background-color: black;
 }
 
-.score_title {
-  grid-area: header;
+.scoreboard {
+  display: flex;
+  align-self: center;
   justify-self: center;
-  align-self: flex-end;
-  color: white;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-family: "Joystix", sans-serif;
+  font-size: 1.6rem;
+  color: var(--just-white);
+  text-align: center;
+}
+
+.scoreboard__center {
+  grid-area: header;
+  width: 280px;
+  justify-self: center;
+}
+
+.scoreboard__left {
+  grid-area: header-l;
+  width: 120px;
+}
+
+.scoreboard__right {
+  grid-area: header-r;
+  width: 120px;
 }
 
 .vacio,
