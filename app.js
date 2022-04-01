@@ -71,25 +71,39 @@
         celdas[pacmanCurrentIndex].classList.add('vacio'); //agregamos espacio vacio por donde pase el pacman
         switch(e.keyCode){
             case 37:
-                if(pacmanCurrentIndex % width !==0 && !celdas[pacmanCurrentIndex-1].classList.contains('pared')){ 
+                if(pacmanCurrentIndex % width !==0 
+                    && !celdas[pacmanCurrentIndex-1].classList.contains('pared')
+                    && !celdas[pacmanCurrentIndex-1].classList.contains('casa-fantasma')){ 
                     //Desplazamiento a la izquierda
                     pacmanCurrentIndex -=1;
+                    if(pacmanCurrentIndex - 1 === 351){ //Si esta en la entrada izquierda se mueve a la de la derecha
+                        pacmanCurrentIndex = 375;
+                    }
                 } 
             break;
             case 38:
-                if(pacmanCurrentIndex - width >= 0 && !celdas[pacmanCurrentIndex-width].classList.contains('pared')){ 
+                if(pacmanCurrentIndex - width >= 0 
+                    && !celdas[pacmanCurrentIndex-width].classList.contains('pared')
+                    && !celdas[pacmanCurrentIndex-width].classList.contains('casa-fantasma')){ 
                     //Desplazamiento hacia arriba
                     pacmanCurrentIndex -= width;
                 }
             break;
             case 39:
-                if(pacmanCurrentIndex % width < width - 1 && !celdas[pacmanCurrentIndex+1].classList.contains('pared')){ 
+                if(pacmanCurrentIndex % width < width - 1 
+                    && !celdas[pacmanCurrentIndex+1].classList.contains('pared')
+                    && !celdas[pacmanCurrentIndex+1].classList.contains('casa-fantasma')){ 
                     //Desplazamiento hacia la derecha
                     pacmanCurrentIndex +=1;
+                    if(pacmanCurrentIndex + 1 === 377){ //Si esta en la entrada derecha se mueve a la de la izquierda
+                        pacmanCurrentIndex = 353;
+                    }
                 }
             break;
             case 40:
-                if(pacmanCurrentIndex + width < width * width && !celdas[pacmanCurrentIndex+width].classList.contains('pared')){ 
+                if(pacmanCurrentIndex + width < width * width 
+                    && !celdas[pacmanCurrentIndex+width].classList.contains('pared')
+                    && !celdas[pacmanCurrentIndex+width].classList.contains('casa-fantasma')){ 
                     //Desplazamiento hacia abajo
                     pacmanCurrentIndex += width;
                 }
