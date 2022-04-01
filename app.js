@@ -33,6 +33,9 @@
                 case 5:
                     celdas[i].classList.add('fantasma');
                 break;
+                case 6:
+                    celdas[i].classList.add('pacman');
+                break;
                 default:
                     console.log('createBoard() error, unknown class');
                 break;
