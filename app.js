@@ -76,6 +76,9 @@
                     && !celdas[pacmanCurrentIndex-1].classList.contains('casa-fantasma')){ 
                     //Desplazamiento a la izquierda
                     pacmanCurrentIndex -=1;
+                    if(pacmanCurrentIndex - 1 === 351){ //Si esta en la entrada izquierda se mueve a la de la derecha
+                        pacmanCurrentIndex = 375;
+                    }
                 } 
             break;
             case 38:
@@ -92,6 +95,9 @@
                     && !celdas[pacmanCurrentIndex+1].classList.contains('casa-fantasma')){ 
                     //Desplazamiento hacia la derecha
                     pacmanCurrentIndex +=1;
+                    if(pacmanCurrentIndex + 1 === 377){ //Si esta en la entrada derecha se mueve a la de la izquierda
+                        pacmanCurrentIndex = 353;
+                    }
                 }
             break;
             case 40:

@@ -5,9 +5,8 @@
     //2 ---> Migaja (clase= miga)
     //3 ---> Queso (Clase= queso)
     //4 ---> Casa de fantasmas (clase = casa-fantasma)
-    //5 ---> Fantasma (default=pinky) clase = fantasma
-    //6 ---> Pacman
 
+// 351 y 377 entradas laterales 
 
 const layout = {
     1 :               [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -38,3 +37,4 @@ const layout = {
                       ,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1
                       ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 };
+//console.log(layout[1].indexOf(9))
