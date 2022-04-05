@@ -1,10 +1,11 @@
     const container = document.querySelector('.container');
     const scoreDisplay = document.getElementById('score');
-
     const width = 27; // Ancho del board 27 x 27 cuadros de 20px cada uno = 729 cuadros
+    let score = 0;
     let pacmanCurrentIndex = 580; //Donde empieza el pacman
     let level = layout[1];
     let celdas = [];
+    let gameOver = false;
     //Función para crear divs dentro del contendor del HTML y asignarles clases según su número en el layout
     function createBoard(level) {
         for(let i = 0; i<level.length; i++){ 
@@ -32,7 +33,7 @@
                     celdas[i].classList.add('casa-fantasma');
                 break;
                 default:
-                    console.log('createBoard() error, unknown class');
+                    console.warn('createBoard() error, unknown class');
                 break;
             }
         }
@@ -52,17 +53,22 @@
         };
     };
 
-    let ghosts = [
-        new Ghost('blue',362,250),
-        new Ghost('pinky',364,400),
-        new Ghost('red',366,300),
-        new Ghost('orange',283,500)
+    let ghosts = [ //Generamos 6 fantasmas (pueden ser mas)
+        new Ghost('blue',362,1000),
+        new Ghost('pinky',364,1100),
+        new Ghost('red',366,900),
+        new Ghost('orange',283,950),
+        new Ghost('pinky',336,1100),
+        new Ghost('blue',338,1000)
     ];
 
     ghosts.forEach(ghost => { //funcion para agregar className de cada tipo de fantasma a cuadricula
         celdas[ghost.currentIndex].classList.add('fantasma');
         celdas[ghost.currentIndex].classList.add(ghost.className); //al div que se encuentre en el currentIndex del fantasma se le asigna una clase adicional segun el className de cada tipo de fantasma.
     });
+
+    
+    ghosts.forEach(ghost => moverFantasma(ghost)); //Movemos los fantasmas
 
     document.addEventListener('keyup',moverPacman);
     function moverPacman(e){
@@ -109,15 +115,36 @@
                 }
             break;
         }
+        comerMigaja()
         celdas[pacmanCurrentIndex].classList.remove(...celdas[pacmanCurrentIndex].classList);
         celdas[pacmanCurrentIndex].classList.add('pacman');
-        //comerMigaja()
+        
         //comerQueso() *Podrían ser una sola
         //checkGameOver()
         //checkWin()
     }
 
+    function comerMigaja(){
+        if(celdas[pacmanCurrentIndex].classList.contains('subElement-back')){
+            score++;
+            scoreDisplay.innerHTML = score;
+        }
+    }
 
+    function moverFantasma(ghost){ //Funcion para mover fantasmas segun su velocidad 
+        const directions = [-1,1,-width,width]; //Se pueden mover un cuadro hacia arriba,derecha,abajo,izquierda
+        let direction = directions[Math.floor(Math.random() * directions.length)];//direccion aleatoria
+        ghost.timerId = setInterval( ()=> { //funcion anonima que se ejecuta cada X milisegundos definidos por ghost.speed
+            if(!celdas[ghost.currentIndex + direction].classList.contains('pared') //Si no encuentra pared
+            && !celdas[ghost.currentIndex + direction].classList.contains('fantasma')){ //Y no encuentra a otro fantasma
+                celdas[ghost.currentIndex].classList.remove(ghost.className,'fantasma');//quitamos fantasma de su currentIndex
+                ghost.currentIndex += direction; //Sumamos direccion validada al ghost.currentIndex
+                celdas[ghost.currentIndex].classList.add('fantasma', ghost.className);//Agregamos fantasma a nueva direccion
+            } else { //Si encontro muro o fantasma entonces...
+                direction =  directions[Math.floor(Math.random() * directions.length)];//Buscamos otra direccion 
+            }
+        }, ghost.speed);
+    }
 
 
 
