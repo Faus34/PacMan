@@ -93,12 +93,12 @@ body {
 
 .scoreboard__left {
   grid-area: header-l;
-  width: 120px;
+  width: 80px;
 }
 
 .scoreboard__right {
   grid-area: header-r;
-  width: 120px;
+  width: 80px;
 }
 
 .vacio, .vacio>div,
@@ -172,5 +172,9 @@ body {
 }
 
 .pacman>div {
+  visibility: hidden;
+}
+
+.fantasma>div {
   visibility: hidden;
 }
