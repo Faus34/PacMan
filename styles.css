@@ -204,6 +204,10 @@ body {
   background-size: contain;
 }
 
+.scared-ghost {
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/Vulnerable-ghost.png?alt=media&token=10081f44-2851-4d05-a7ed-6d8b76d66033) !important;
+}
+
 .pinky {
   background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pinky-min.png?alt=media&token=d5d87357-a097-4b46-9a9e-7e0a82c12210);
 }

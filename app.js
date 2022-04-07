@@ -24,10 +24,12 @@
                     celdas[i].classList.add('pared');
                 break;
                 case 2: 
+                    celdas[i].classList.add('migaja');
                     celdas[i].classList.add('subElement-back');
                     celdas[i].appendChild(subElemento).classList.add('miga');
                 break;
                 case 3:
+                    celdas[i].classList.add('power');
                     celdas[i].classList.add('subElement-back');
                     celdas[i].appendChild(subElemento).classList.add('queso');
                 break;
@@ -52,16 +54,17 @@
             this.speed = speed;
             this.currentIndex = startIndex;
             this.timerId = NaN;
+            this.isScared = false;
         };
     };
 
     let ghosts = [ //Generamos 6 fantasmas (pueden ser mas)
-        new Ghost('blue',362,1000),
-        new Ghost('pinky',364,1100),
-        new Ghost('red',366,900),
-        new Ghost('orange',283,950),
-        new Ghost('pinky',336,1100),
-        new Ghost('blue',338,1000)
+        new Ghost('blue',362,600),
+        new Ghost('pinky',364,700),
+        new Ghost('red',366,600),
+        new Ghost('orange',283,650),
+        new Ghost('pinky',336,600),
+        new Ghost('blue',338,700)
     ];
 
     ghosts.forEach(ghost => { //funcion para agregar className de cada tipo de fantasma a cuadricula
@@ -70,7 +73,10 @@
     });
 
     
-    ghosts.forEach(ghost => moverFantasma(ghost)); //Movemos los fantasmas
+    ghosts.forEach(ghost => {
+        moverFantasma(ghost); //Movimiento del fantasma cada ghost.speed segundos
+        //ghostEaten(ghost); //revisa cada X tiempo si el fantasma fue comido 
+    }); //Movemos los fantasmas
     
     
     document.addEventListener('keyup',moverPacman);
@@ -118,18 +124,33 @@
                 }
             break;
         }
-        comerMigaja()
+        comerMigaja();
+        comerQueso();
         celdas[pacmanCurrentIndex].classList.remove(...celdas[pacmanCurrentIndex].classList);
         celdas[pacmanCurrentIndex].classList.add('pacman');
-        
-        //comerQueso() *Podrían ser una sola
         //checkGameOver()
         //checkWin()
         }
     }
 
+    function comerQueso(){ //Funcion que se ejecuta cuando el pacman come un queso (poder)
+        if(celdas[pacmanCurrentIndex].classList.contains('power')){
+            console.log('Comio el queso');
+            score += 10;
+            scoreDisplay.innerHTML = score;
+            ghosts.forEach(ghost => ghost.isScared = true);
+            console.log('Los fantasmas estan asustados?',ghosts[1].isScared);
+            setTimeout(curarDeEspanto,10000); //10 segundos
+        }
+    }
+
+    function curarDeEspanto(){ //Funcion para quitarle lo espantado a los fantasmas
+        ghosts.forEach(ghost => ghost.isScared = false);
+        console.log('Los fantasmas estan asustados?',ghosts[1].isScared);
+    }
+
     function comerMigaja(){
-        if(celdas[pacmanCurrentIndex].classList.contains('subElement-back')){
+        if(celdas[pacmanCurrentIndex].classList.contains('migaja')){
             score++;
             scoreDisplay.innerHTML = score;
         }
@@ -139,6 +160,15 @@
         const directions = [-1,1,-width,width]; //Se pueden mover un cuadro hacia arriba,derecha,abajo,izquierda
         let direction = directions[Math.floor(Math.random() * directions.length)];//direccion aleatoria
         ghost.timerId = setInterval( ()=> { //funcion anonima que se ejecuta cada X milisegundos definidos por ghost.speed
+
+            if(ghost.isScared && celdas[ghost.currentIndex].classList.contains('pacman')){ //Que hacer si se lo come el pacman
+                celdas[ghost.currentIndex].classList.remove(ghost.className,'fantasma','scared-ghost');//lo desaparecemos del lugar
+                ghost.currentIndex = ghost.startIndex; //Lo regresamos a su casa
+                score += 100; //sumamos 100 puntos al score
+                scoreDisplay.innerHTML = score;
+                celdas[ghost.currentIndex].classList.add('fantasma',ghost.className);//Pintamos el fantasma
+            }
+
             if(!celdas[ghost.currentIndex + direction].classList.contains('pared') //Si no encuentra pared
             && !celdas[ghost.currentIndex + direction].classList.contains('fantasma')
             && startButton === true){ //Y no encuentra a otro fantasma
@@ -150,8 +180,18 @@
                 direction =  directions[Math.floor(Math.random() * directions.length)];//Buscamos otra direccion 
                 }
             }
+
+            if(ghost.isScared){ //Si el fantasma esta asustado le asigna esa clase
+                celdas[ghost.currentIndex].classList.add('scared-ghost');
+            }
+
+            if(celdas[ghost.currentIndex].classList.contains('scared-ghost')&& ghost.isScared===false){ //Remueve la clase scared-ghost despues de curar de espanto
+                celdas[ghost.currentIndex].classList.remove('scared-ghost');
+            }
+
         }, ghost.speed);
     }
+
     let startButtonText = document.getElementById('btn-red-text');
     function buttonClicked() {
         startButton = !startButton;
