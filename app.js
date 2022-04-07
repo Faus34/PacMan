@@ -6,6 +6,8 @@
     let level = layout[1];
     let celdas = [];
     let gameOver = false;
+    let startButton = false;
+
     //Función para crear divs dentro del contendor del HTML y asignarles clases según su número en el layout
     function createBoard(level) {
         for(let i = 0; i<level.length; i++){ 
@@ -69,10 +71,11 @@
 
     
     ghosts.forEach(ghost => moverFantasma(ghost)); //Movemos los fantasmas
-
+    
+    
     document.addEventListener('keyup',moverPacman);
     function moverPacman(e){
-        //celdas[pacmanCurrentIndex].classList.remove(...celdas[pacmanCurrentIndex].classList); //quitamos todas las clases
+        if(startButton){
         celdas[pacmanCurrentIndex].classList.remove('pacman');
         celdas[pacmanCurrentIndex].classList.add('vacio'); //agregamos espacio vacio por donde pase el pacman
         switch(e.keyCode){
@@ -122,6 +125,7 @@
         //comerQueso() *Podrían ser una sola
         //checkGameOver()
         //checkWin()
+        }
     }
 
     function comerMigaja(){
@@ -136,17 +140,23 @@
         let direction = directions[Math.floor(Math.random() * directions.length)];//direccion aleatoria
         ghost.timerId = setInterval( ()=> { //funcion anonima que se ejecuta cada X milisegundos definidos por ghost.speed
             if(!celdas[ghost.currentIndex + direction].classList.contains('pared') //Si no encuentra pared
-            && !celdas[ghost.currentIndex + direction].classList.contains('fantasma')){ //Y no encuentra a otro fantasma
+            && !celdas[ghost.currentIndex + direction].classList.contains('fantasma')
+            && startButton === true){ //Y no encuentra a otro fantasma
                 celdas[ghost.currentIndex].classList.remove(ghost.className,'fantasma');//quitamos fantasma de su currentIndex
                 ghost.currentIndex += direction; //Sumamos direccion validada al ghost.currentIndex
                 celdas[ghost.currentIndex].classList.add('fantasma', ghost.className);//Agregamos fantasma a nueva direccion
             } else { //Si encontro muro o fantasma entonces...
+                if(startButton){
                 direction =  directions[Math.floor(Math.random() * directions.length)];//Buscamos otra direccion 
+                }
             }
         }, ghost.speed);
     }
-
-
+    let startButtonText = document.getElementById('btn-red-text');
+    function buttonClicked() {
+        startButton = !startButton;
+        startButton===true?startButtonText.innerHTML= 'Stop':startButtonText.innerHTML= 'Start';
+    }
 
 
 

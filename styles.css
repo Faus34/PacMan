@@ -14,6 +14,7 @@
   --Pacman-red: #fd0000;
   --Electric-green: #00ff00;
   --Pacman-orange: #ff8303;
+  --btn-scale: 15px; 
 }
 
 body {
@@ -38,6 +39,62 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
+.footer-right {
+  width: 100%;
+  grid-area: footer-r;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos del boton de start */
+/* Para cambiar el tamaño del boton solo hace falta cambiar la variable btn-scale */
+
+.btn-red {
+  position: relative;
+  width: calc(5.125*var(--btn-scale)); 
+  height: calc(5.125*var(--btn-scale));
+  border-radius: calc(2.5*var(--btn-scale));
+  background: radial-gradient(calc(2.562*var(--btn-scale)) at 50% 50%, #E04B50 0%, #800F16 67.4%, #BF2E33 69.61%, #F5383E 85.08%, #CE061A 100%);
+  box-shadow: 0px calc(0.025*var(--btn-scale)) calc(0.1*var(--btn-scale)) rgba(0, 0, 0, 0.63), inset 0px 0px calc(0.15*var(--btn-scale)) rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+}
+
+.btn-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transition: transform 200ms, scale 300ms;
+  transform: translate(-50%, -52%);
+  width: calc(3.375*var(--btn-scale));
+  height: calc(3.375*var(--btn-scale));
+  border-radius: calc(2.5*var(--btn-scale));
+  background: radial-gradient(calc(1.687*var(--btn-scale)) at 50% 50%, #DD4A4F 0%, #E5373F 65.19%, #D43338 83.98%, #ED454A 88.4%, #D91222 100%);
+  box-shadow: 0px calc(0.05*var(--btn-scale)) calc(0.15*var(--btn-scale)) rgba(0, 0, 0, 0.22);
+}
+
+.btn-inner:hover {
+  transform: translate(-50%, -50%);
+}
+
+.btn-inner:active {
+  transform: scale(0.98) translate(-51%, -52%);
+}
+
+.btn-text {
+  font-family: "Joystix",sans-serif;
+  color: #fff;
+  /* font-heigth: 700; */
+  font-size: calc(0.6*var(--btn-scale));
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Fin de estilos del boton */
 
 .logo {
   width: 270px;
