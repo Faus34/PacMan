@@ -5,8 +5,9 @@
     let pacmanCurrentIndex = 580; //Donde empieza el pacman
     let level = layout[1];
     let celdas = [];
-    let gameOver = false;
     let startButton = false;
+    let lives = 3;
+    let gameOver = false;
 
     //Función para crear divs dentro del contendor del HTML y asignarles clases según su número en el layout
     function createBoard(level) {
@@ -126,27 +127,28 @@
         }
         comerMigaja();
         comerQueso();
+        checkGameOver();
+        checkWin();
         celdas[pacmanCurrentIndex].classList.remove(...celdas[pacmanCurrentIndex].classList);
         celdas[pacmanCurrentIndex].classList.add('pacman');
-        //checkGameOver()
         //checkWin()
         }
     }
 
     function comerQueso(){ //Funcion que se ejecuta cuando el pacman come un queso (poder)
         if(celdas[pacmanCurrentIndex].classList.contains('power')){
-            console.log('Comio el queso');
+            //console.log('Comio el queso');
             score += 10;
             scoreDisplay.innerHTML = score;
             ghosts.forEach(ghost => ghost.isScared = true);
-            console.log('Los fantasmas estan asustados?',ghosts[1].isScared);
+            //console.log('Los fantasmas estan asustados?',ghosts[1].isScared);
             setTimeout(curarDeEspanto,10000); //10 segundos
         }
     }
 
     function curarDeEspanto(){ //Funcion para quitarle lo espantado a los fantasmas
         ghosts.forEach(ghost => ghost.isScared = false);
-        console.log('Los fantasmas estan asustados?',ghosts[1].isScared);
+        //console.log('Los fantasmas estan asustados?',ghosts[1].isScared);
     }
 
     function comerMigaja(){
@@ -188,15 +190,67 @@
             if(celdas[ghost.currentIndex].classList.contains('scared-ghost')&& ghost.isScared===false){ //Remueve la clase scared-ghost despues de curar de espanto
                 celdas[ghost.currentIndex].classList.remove('scared-ghost');
             }
-
+            checkGameOver();
         }, ghost.speed);
     }
 
     let startButtonText = document.getElementById('btn-red-text');
+    
     function buttonClicked() {
         startButton = !startButton;
         startButton===true?startButtonText.innerHTML= 'Stop':startButtonText.innerHTML= 'Start';
     }
 
+//Traemos los iconos de vida
+let vida_1 = document.getElementById('live-1');
+let vida_2 = document.getElementById('live-2');
+let vida_3 = document.getElementById('live-3');
 
+//Traemos el high score scoreboard
+let main_scoreboard = document.getElementById('high-score-scoreboard');
 
+function checkGameOver(){
+    
+    if(celdas[pacmanCurrentIndex].classList.contains('fantasma') &&
+    celdas[pacmanCurrentIndex].classList.contains('scared-ghost')===false){
+        lives -= 1;
+        pacmanCurrentIndex = 580;
+        //console.log('Live lost')
+    }
+    switch (lives){
+        case 2:
+            vida_3.classList.add('hidden');
+        break;
+        case 1:
+            vida_2.classList.add('hidden');
+        break;
+        case 0:
+            vida_1.classList.add('hidden');
+            ghosts.forEach(ghost => clearInterval(ghost.timerId));
+            document.removeEventListener('keyup',moverPacman);
+            main_scoreboard.innerHTML = 'GAME OVER';
+            gameOver = true;
+            buttonClicked(); //Pausamos el juego
+        break;
+        default:
+            if(lives!=3){
+                ghosts.forEach(ghost => clearInterval(ghost.timerId));
+                document.removeEventListener('keyup',moverPacman);
+                main_scoreboard.innerHTML = 'GAME OVER';
+                gameOver = true;
+                buttonClicked(); //Pausamos el juego
+            }
+        break;
+    }
+}
+
+function checkWin(){
+    let win = !celdas.some(div => div.classList.contains('migaja')||div.classList.contains('power'));
+    if(win){
+        ghosts.forEach(ghost => clearInterval(ghost.timerId));
+        document.removeEventListener('keyup',moverPacman);
+        main_scoreboard.innerHTML = 'YOU WON !!';
+        gameOver = true;
+        buttonClicked(); //Pausamos el juego
+    }
+}
