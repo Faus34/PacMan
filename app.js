@@ -2,6 +2,7 @@
     const scoreDisplay = document.getElementById('score');
     const width = 27; // Ancho del board 27 x 27 cuadros de 20px cada uno = 729 cuadros
     let score = 0;
+    let scoresList = [];
     let pacmanCurrentIndex = 580; //Donde empieza el pacman
     let level = layout[1];
     let celdas = [];
@@ -59,25 +60,28 @@
         };
     };
 
-    let ghosts = [ //Generamos 6 fantasmas (pueden ser mas)
+    let ghosts = [];
+    function crearFantasmas(Ghost){
+        ghosts = [ //Generamos 6 fantasmas (pueden ser mas)
         new Ghost('blue',362,600),
         new Ghost('pinky',364,700),
         new Ghost('red',366,600),
         new Ghost('orange',283,650),
         new Ghost('pinky',336,600),
         new Ghost('blue',338,700)
-    ];
+        ];
 
-    ghosts.forEach(ghost => { //funcion para agregar className de cada tipo de fantasma a cuadricula
+        ghosts.forEach(ghost => { //funcion para agregar className de cada tipo de fantasma a cuadricula
         celdas[ghost.currentIndex].classList.add('fantasma');
         celdas[ghost.currentIndex].classList.add(ghost.className); //al div que se encuentre en el currentIndex del fantasma se le asigna una clase adicional segun el className de cada tipo de fantasma.
-    });
+        });
 
-    
-    ghosts.forEach(ghost => {
+        ghosts.forEach(ghost => {
         moverFantasma(ghost); //Movimiento del fantasma cada ghost.speed segundos
         //ghostEaten(ghost); //revisa cada X tiempo si el fantasma fue comido 
-    }); //Movemos los fantasmas
+        }); //Movemos los fantasmas
+    }
+    crearFantasmas(Ghost);
     
     
     document.addEventListener('keyup',moverPacman);
@@ -195,7 +199,7 @@
     }
 
     let startButtonText = document.getElementById('btn-red-text');
-    
+
     function buttonClicked() {
         startButton = !startButton;
         startButton===true?startButtonText.innerHTML= 'Stop':startButtonText.innerHTML= 'Start';
@@ -214,8 +218,11 @@ function checkGameOver(){
     if(celdas[pacmanCurrentIndex].classList.contains('fantasma') &&
     celdas[pacmanCurrentIndex].classList.contains('scared-ghost')===false){
         lives -= 1;
+        celdas[pacmanCurrentIndex].classList.remove('pacman');
+        celdas[pacmanCurrentIndex].classList.add('vacio');
         pacmanCurrentIndex = 580;
-        //console.log('Live lost')
+        celdas[pacmanCurrentIndex].classList.remove(...celdas[pacmanCurrentIndex].classList);
+        celdas[pacmanCurrentIndex].classList.add('pacman');
     }
     switch (lives){
         case 2:
@@ -231,6 +238,7 @@ function checkGameOver(){
             main_scoreboard.innerHTML = 'GAME OVER';
             gameOver = true;
             buttonClicked(); //Pausamos el juego
+            newGame();
         break;
         default:
             if(lives!=3){
@@ -239,6 +247,7 @@ function checkGameOver(){
                 main_scoreboard.innerHTML = 'GAME OVER';
                 gameOver = true;
                 buttonClicked(); //Pausamos el juego
+                newGame();
             }
         break;
     }
@@ -251,6 +260,34 @@ function checkWin(){
         document.removeEventListener('keyup',moverPacman);
         main_scoreboard.innerHTML = 'YOU WON !!';
         gameOver = true;
-        buttonClicked(); //Pausamos el juego
+        buttonClicked(); //cambiamos estado de boton a falso
+        newGame();
     }
+}
+//Funcion para reiniciar el juego tras ganar o perder
+    //Reiniciamos: 
+    //Tablero, vidas, estado gameOver, fantasmas, pacman, score
+    //Se registra la score en una lista y si fue la mejor score se coloca en tablero
+function newGame(){
+    setInterval( () => {
+        if(gameOver && startButton){
+        lives = 3;
+        vida_1.classList.remove('hidden');
+        vida_2.classList.remove('hidden');
+        vida_3.classList.remove('hidden');
+        container.innerHTML = '';
+        celdas = [];
+        createBoard(level);
+        ghosts = [];
+        crearFantasmas(Ghost);
+        pacmanCurrentIndex = 580;
+        celdas[pacmanCurrentIndex].classList.add('pacman');
+        document.addEventListener('keyup',moverPacman);
+        scoresList.push(score); //Guardamos score en lista temporal (se borra al refrescar la pagina)
+        main_scoreboard.innerHTML = Math.max(...scoresList); //Ponemos max score en en panel high score
+        score = 0;
+        scoreDisplay.innerHTML = score;
+        gameOver = false;
+    } 
+    },500);
 }
