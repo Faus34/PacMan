@@ -85,6 +85,7 @@
     
     
     document.addEventListener('keyup',moverPacman);
+
     function moverPacman(e){
         if(startButton){
         celdas[pacmanCurrentIndex].classList.remove('pacman');
@@ -96,6 +97,7 @@
                     && !celdas[pacmanCurrentIndex-1].classList.contains('casa-fantasma')){ 
                     //Desplazamiento a la izquierda
                     pacmanCurrentIndex -=1;
+                    pacmanNoise.play();
                     if(pacmanCurrentIndex - 1 === 351){ //Si esta en la entrada izquierda se mueve a la de la derecha
                         pacmanCurrentIndex = 375;
                     }
@@ -107,6 +109,7 @@
                     && !celdas[pacmanCurrentIndex-width].classList.contains('casa-fantasma')){ 
                     //Desplazamiento hacia arriba
                     pacmanCurrentIndex -= width;
+                    pacmanNoise.play();
                 }
             break;
             case 39:
@@ -115,6 +118,7 @@
                     && !celdas[pacmanCurrentIndex+1].classList.contains('casa-fantasma')){ 
                     //Desplazamiento hacia la derecha
                     pacmanCurrentIndex +=1;
+                    pacmanNoise.play();
                     if(pacmanCurrentIndex + 1 === 377){ //Si esta en la entrada derecha se mueve a la de la izquierda
                         pacmanCurrentIndex = 353;
                     }
@@ -126,6 +130,7 @@
                     && !celdas[pacmanCurrentIndex+width].classList.contains('casa-fantasma')){ 
                     //Desplazamiento hacia abajo
                     pacmanCurrentIndex += width;
+                    pacmanNoise.play();
                 }
             break;
         }
@@ -145,14 +150,14 @@
             score += 10;
             scoreDisplay.innerHTML = score;
             ghosts.forEach(ghost => ghost.isScared = true);
-            //console.log('Los fantasmas estan asustados?',ghosts[1].isScared);
+            powerEatenSound.play();
             setTimeout(curarDeEspanto,10000); //10 segundos
+
         }
     }
 
     function curarDeEspanto(){ //Funcion para quitarle lo espantado a los fantasmas
         ghosts.forEach(ghost => ghost.isScared = false);
-        //console.log('Los fantasmas estan asustados?',ghosts[1].isScared);
     }
 
     function comerMigaja(){
@@ -173,6 +178,7 @@
                 score += 100; //sumamos 100 puntos al score
                 scoreDisplay.innerHTML = score;
                 celdas[ghost.currentIndex].classList.add('fantasma',ghost.className);//Pintamos el fantasma
+                ghostEatenSound.play();
             }
 
             if(!celdas[ghost.currentIndex + direction].classList.contains('pared') //Si no encuentra pared
@@ -194,16 +200,36 @@
             if(celdas[ghost.currentIndex].classList.contains('scared-ghost')&& ghost.isScared===false){ //Remueve la clase scared-ghost despues de curar de espanto
                 celdas[ghost.currentIndex].classList.remove('scared-ghost');
             }
+            
             checkGameOver();
         }, ghost.speed);
     }
 
     let startButtonText = document.getElementById('btn-red-text');
+    let buttonCount = 0;
+    
 
     function buttonClicked() {
         startButton = !startButton;
-        startButton===true?startButtonText.innerHTML= 'Stop':startButtonText.innerHTML= 'Start';
+        buttonCount++;
+        if(startButton){
+            startButtonText.innerHTML= 'Stop';
+            if(buttonCount==1){
+                beginSound.play();
+                backgroundSound(true);
+            } else {
+                playSound.play();
+                backgroundSound(true);
+            }
+        } else {
+            startButtonText.innerHTML= 'Start';
+            stopSound.play();
+            backgroundSound(false);
+        } 
     }
+    
+    beginSound.addEventListener('ended',()=>ghostNoises.muted=false); //Se espera a que termine la musica para agregar la de fondo.
+    playSound.addEventListener('ended',()=>ghostNoises.muted=false);
 
 //Traemos los iconos de vida
 let vida_1 = document.getElementById('live-1');
@@ -221,6 +247,7 @@ function checkGameOver(){
         celdas[pacmanCurrentIndex].classList.remove('pacman');
         celdas[pacmanCurrentIndex].classList.add('vacio');
         pacmanCurrentIndex = 580;
+        deathNoise.play();
         celdas[pacmanCurrentIndex].classList.remove(...celdas[pacmanCurrentIndex].classList);
         celdas[pacmanCurrentIndex].classList.add('pacman');
     }
@@ -288,6 +315,19 @@ function newGame(){
         score = 0;
         scoreDisplay.innerHTML = score;
         gameOver = false;
+        buttonCount = 0;
+        beginSound.play();
     } 
     },500);
 }
+
+function backgroundSound(state){
+    ghostNoises.currentTime = 0;
+    if(state){
+        ghostNoises.play();
+    } else {
+        ghostNoises.pause();
+        ghostNoises.muted = true;
+    }
+}
+

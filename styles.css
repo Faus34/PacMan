@@ -10,6 +10,7 @@ html {
   overflow: hidden;
 }
 
+
 :root {
   --just-white: #fefefe;
   --Pacman-yellow: #ffff00;
@@ -35,6 +36,10 @@ body {
     "footer-l footer footer-r";
   justify-content: center;
   grid-gap: 15px;
+}
+
+.sonido {
+  grid-area: right-sider;
 }
 
 .footer {
