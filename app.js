@@ -227,7 +227,7 @@
             stopSound.play();
             backgroundSound(false);
         }  
-       neonPopUp.style.visibility = 'hidden';
+       displayPopUp({visible:false});
     }
     
     beginSound.addEventListener('ended',()=>ghostNoises.muted=false); //Se espera a que termine la musica para agregar la de fondo.
@@ -342,9 +342,25 @@ let nextButtonCounter = 0;
 
 function displayPopUp({visible=false,mensaje=''}){
     visible? neonPopUp.style.visibility = 'visible' : neonPopUp.style.visibility = 'hidden';
+    if(visible){
+        neonPopUp.style.visibility = 'visible'
+        nextButton.style.visibility = 'visible'
+        neonHeader.style.display = 'block';
+    } else {
+        neonPopUp.style.visibility = 'hidden';
+        nextButton.style.visibility = 'hidden';
+        yesButton.style.visibility = 'hidden';
+        noButton.style.visibility = 'hidden';
+    }
     neonHeader.innerHTML = mensaje;
-    neonHeader.style.display = 'block';
 }
+
+let nextButton = document.getElementById('next');
+let yesButton = document.getElementById('si');
+let noButton = document.getElementById('no');
+//nextButton.style.visibility = 'visible';
+yesButton.style.visibility = 'hidden';
+noButton.style.visibility = 'hidden';
 
 function nextScreen() {
     neonHeader.style.display = 'none';
@@ -352,5 +368,18 @@ function nextScreen() {
         neonText.innerHTML = popupContent[nextButtonCounter];
         neonText.style.display = 'block';
         nextButtonCounter++;
+    } 
+    if(nextButtonCounter==popupContent.length){
+        nextButton.style.visibility = 'hidden';
+        yesButton.style.visibility = 'visible';
+        noButton.style.visibility = 'visible';
     }
+}
+
+function si(){
+    yeyy.play();
+}
+
+function no(){
+    cricket.play();
 }

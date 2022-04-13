@@ -156,6 +156,13 @@ body {
   cursor: pointer;
 }
 
+.yesNoContainer {
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .neon-popup::-moz-selection {
   background-color: var(--neon-border-color);
   color: var(--neon-text-color);
@@ -353,3 +360,4 @@ body {
 .fantasma>div {
   visibility: hidden;
 }
+
