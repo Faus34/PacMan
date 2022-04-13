@@ -60,3 +60,10 @@ let ghostEatenSound = new Audio();
 ghostEatenSound.src = 'https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/SoundEffects%2Fpacman_eatghost.mp3?alt=media&token=f9b8141f-0aed-4d6e-ac48-9aa2b816b71c';
 let powerEatenSound = new Audio();
 powerEatenSound.src = 'https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/SoundEffects%2Fpacman_eatfruit.mp3?alt=media&token=d80b090b-d79e-405f-813b-db535f8bb507';
+
+
+let popupContent = [
+    ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eius, repellat fugit possimus facere fuga, repudiandae deleniti aperiam vitae tenetur atque deserunt numquam ratione, quibusdam nemo recusandae minima modi blanditiis.',
+    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, eveniet. Sit at dolorum voluptatum ratione ducimus, dolor molestiae quo soluta. Quod ratione corrupti at, expedita asperiores unde dolorum distinctio reprehenderit deserunt obcaecati atque quaerat mollitia.',
+    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dolore quis, dicta aliquam animi fugiat aperiam hic cum. Explicabo, deserunt.','Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti in natus obcaecati eligendi voluptas laudantium expedita itaque molestias fugit quis impedit consequuntur voluptatem, error amet eius a. Nemo ab ipsam perferendis voluptatibus, corrupti id tenetur quas, placeat commodi alias dicta.'
+]

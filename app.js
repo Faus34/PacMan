@@ -207,7 +207,7 @@
 
     let startButtonText = document.getElementById('btn-red-text');
     let buttonCount = 0;
-    
+    let neonPopUp = document.getElementById('neon-popup');
 
     function buttonClicked() {
         startButton = !startButton;
@@ -225,7 +225,8 @@
             startButtonText.innerHTML= 'Start';
             stopSound.play();
             backgroundSound(false);
-        } 
+        }  
+       neonPopUp.style.visibility = 'hidden';
     }
     
     beginSound.addEventListener('ended',()=>ghostNoises.muted=false); //Se espera a que termine la musica para agregar la de fondo.
@@ -265,6 +266,7 @@ function checkGameOver(){
             main_scoreboard.innerHTML = 'GAME OVER';
             gameOver = true;
             buttonClicked(); //Pausamos el juego
+            displayPopUp({visible:true,mensaje:'You Lost!'});
             newGame();
         break;
         default:
@@ -274,6 +276,7 @@ function checkGameOver(){
                 main_scoreboard.innerHTML = 'GAME OVER';
                 gameOver = true;
                 buttonClicked(); //Pausamos el juego
+                displayPopUp({visible:true,mensaje:'You Lost!'});
                 newGame();
             }
         break;
@@ -288,6 +291,7 @@ function checkWin(){
         main_scoreboard.innerHTML = 'YOU WON !!';
         gameOver = true;
         buttonClicked(); //cambiamos estado de boton a falso
+        displayPopUp({visible:true,mensaje:'You Won!'});
         newGame();
     }
 }
@@ -331,3 +335,21 @@ function backgroundSound(state){
     }
 }
 
+const neonHeader = document.getElementById('neon-header');
+let neonText = document.getElementById('neon-body');
+let nextButtonCounter = 0;
+
+function displayPopUp({visible=false,mensaje=''}){
+    visible? neonPopUp.style.visibility = 'visible' : neonPopUp.style.visibility = 'hidden';
+    neonHeader.innerHTML = mensaje;
+    neonHeader.style.display = 'block';
+}
+
+function nextScreen() {
+    neonHeader.style.display = 'none';
+    if(nextButtonCounter<popupContent.length){
+        neonText.innerHTML = popupContent[nextButtonCounter];
+        neonText.style.display = 'block';
+        nextButtonCounter++;
+    }
+}
