@@ -63,12 +63,13 @@
     let ghosts = [];
     function crearFantasmas(Ghost){
         ghosts = [ //Generamos 6 fantasmas (pueden ser mas)
-        new Ghost('blue',362,600),
-        new Ghost('pinky',364,700),
-        new Ghost('red',366,600),
         new Ghost('orange',283,650),
         new Ghost('pinky',336,600),
-        new Ghost('blue',338,700)
+        new Ghost('blue',338,700),
+        new Ghost('blue',362,600),
+        new Ghost('red',366,600),
+        new Ghost('pinky',390,700),
+        new Ghost('orange',392,700)
         ];
 
         ghosts.forEach(ghost => { //funcion para agregar className de cada tipo de fantasma a cuadricula

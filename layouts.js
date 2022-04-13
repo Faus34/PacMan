@@ -22,9 +22,9 @@ const layout = {
                       ,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0
                       ,0,0,0,0,0,1,2,1,0,1,1,1,1,4,1,1,1,1,0,1,2,1,0,0,0,0,0
                       ,1,1,1,1,1,1,2,1,0,1,1,4,4,4,4,4,1,1,0,1,2,1,1,1,1,1,1
-                      ,0,0,2,2,2,2,2,2,0,1,1,4,4,4,4,4,1,1,0,2,2,2,2,2,2,0,0
-                      ,1,1,1,1,1,1,2,1,0,1,1,1,1,1,1,1,1,1,0,1,2,1,1,1,1,1,1
-                      ,0,0,0,0,0,1,2,1,0,1,1,1,1,1,1,1,1,1,0,1,2,1,0,0,0,0,0
+                      ,0,0,2,2,2,2,2,2,0,1,1,4,1,1,1,4,1,1,0,2,2,2,2,2,2,0,0
+                      ,1,1,1,1,1,1,2,1,0,1,1,4,4,4,4,4,1,1,0,1,2,1,1,1,1,1,1
+                      ,0,0,0,0,0,1,2,1,0,1,1,1,1,4,1,1,1,1,0,1,2,1,0,0,0,0,0
                       ,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0
                       ,0,0,0,0,0,1,2,1,2,1,1,1,1,2,1,1,1,1,2,1,2,1,0,0,0,0,0
                       ,0,0,0,0,0,1,2,2,2,2,2,2,1,2,1,2,2,2,2,2,2,1,0,0,0,0,0
@@ -37,7 +37,7 @@ const layout = {
                       ,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1
                       ,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 };
-//console.log(layout[1].indexOf(9))
+//console.log(layout[1].indexOf(7)) 390 392
 
 //Efectos de sonido.
 
@@ -63,7 +63,8 @@ powerEatenSound.src = 'https://firebasestorage.googleapis.com/v0/b/pacman-19a45.
 
 
 let popupContent = [
-    ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eius, repellat fugit possimus facere fuga, repudiandae deleniti aperiam vitae tenetur atque deserunt numquam ratione, quibusdam nemo recusandae minima modi blanditiis.',
-    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, eveniet. Sit at dolorum voluptatum ratione ducimus, dolor molestiae quo soluta. Quod ratione corrupti at, expedita asperiores unde dolorum distinctio reprehenderit deserunt obcaecati atque quaerat mollitia.',
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dolore quis, dicta aliquam animi fugiat aperiam hic cum. Explicabo, deserunt.','Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti in natus obcaecati eligendi voluptas laudantium expedita itaque molestias fugit quis impedit consequuntur voluptatem, error amet eius a. Nemo ab ipsam perferendis voluptatibus, corrupti id tenetur quas, placeat commodi alias dicta.'
+    ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate eius, repellat fugit possimus facere fuga, repudiandae deleniti aperiam.',
+    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, eveniet. Sit at dolorum voluptatum ratione ducimus, dolor molestiae quo soluta.',
+    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dolore quis, dicta aliquam animi fugiat aperiam hic cum. Explicabo, deserunt.',
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti in natus obcaecati eligendi voluptas laudantium expedita itaque molestias fugit quis impedit consequuntur voluptatem.'
 ]
