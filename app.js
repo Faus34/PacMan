@@ -50,12 +50,13 @@
 
 
     class Ghost { //Clase prototipo de fantasmas startIndex es su posicion en level
-          constructor(className,startIndex,speed){
+        constructor(className,startIndex,speed){
             this.className = className;
             this.startIndex = startIndex;
             this.speed = speed;
             this.currentIndex = startIndex;
             this.timerId = NaN;
+            this.EatenTimer = NaN;
             this.isScared = false;
         };
     };
@@ -79,20 +80,26 @@
 
         ghosts.forEach(ghost => {
         moverFantasma(ghost); //Movimiento del fantasma cada ghost.speed segundos
-        //ghostEaten(ghost); //revisa cada X tiempo si el fantasma fue comido 
         }); //Movemos los fantasmas
     }
     crearFantasmas(Ghost);
+ 
+    let keyState = {};    
+    document.addEventListener('keydown',function(e){
+        keyState[e.keyCode || e.which] = true;
+    },true);    
+    document.addEventListener('keyup',function(e){
+        keyState[e.keyCode || e.which] = false;
+    },true);
     
-    
-    document.addEventListener('keyup',moverPacman);
+    //document.addEventListener('keydown',moverPacman);
 
-    function moverPacman(e){
+    function moverPacman(){
         if(startButton){
         celdas[pacmanCurrentIndex].classList.remove('pacman');
         celdas[pacmanCurrentIndex].classList.add('vacio'); //agregamos espacio vacio por donde pase el pacman
-        switch(e.keyCode){
-            case 37:
+        
+            if(keyState[37]){ 
                 if(pacmanCurrentIndex % width !==0 
                     && !celdas[pacmanCurrentIndex-1].classList.contains('pared')
                     && !celdas[pacmanCurrentIndex-1].classList.contains('casa-fantasma')){ 
@@ -103,8 +110,9 @@
                         pacmanCurrentIndex = 375;
                     }
                 } 
-            break;
-            case 38:
+            }
+            
+            if(keyState[38]){ 
                 if(pacmanCurrentIndex - width >= 0 
                     && !celdas[pacmanCurrentIndex-width].classList.contains('pared')
                     && !celdas[pacmanCurrentIndex-width].classList.contains('casa-fantasma')){ 
@@ -112,8 +120,9 @@
                     pacmanCurrentIndex -= width;
                     pacmanNoise.play();
                 }
-            break;
-            case 39:
+            }
+            
+            if(keyState[39]){
                 if(pacmanCurrentIndex % width < width - 1 
                     && !celdas[pacmanCurrentIndex+1].classList.contains('pared')
                     && !celdas[pacmanCurrentIndex+1].classList.contains('casa-fantasma')){ 
@@ -124,8 +133,9 @@
                         pacmanCurrentIndex = 353;
                     }
                 }
-            break;
-            case 40:
+            }
+            
+            if(keyState[40]){
                 if(pacmanCurrentIndex + width < width * width 
                     && !celdas[pacmanCurrentIndex+width].classList.contains('pared')
                     && !celdas[pacmanCurrentIndex+width].classList.contains('casa-fantasma')){ 
@@ -133,17 +143,18 @@
                     pacmanCurrentIndex += width;
                     pacmanNoise.play();
                 }
-            break;
+            }
+            //ghostEaten();
+            comerMigaja();
+            comerQueso();
         }
-        comerMigaja();
-        comerQueso();
         checkGameOver();
         checkWin();
         celdas[pacmanCurrentIndex].classList.remove(...celdas[pacmanCurrentIndex].classList);
         celdas[pacmanCurrentIndex].classList.add('pacman');
-        //checkWin()
-        }
+        setTimeout(moverPacman,250);
     }
+    moverPacman();
 
     function comerQueso(){ //Funcion que se ejecuta cuando el pacman come un queso (poder)
         if(celdas[pacmanCurrentIndex].classList.contains('power')){
@@ -153,7 +164,6 @@
             ghosts.forEach(ghost => ghost.isScared = true);
             powerEatenSound.play();
             setTimeout(curarDeEspanto,10000); //10 segundos
-
         }
     }
 
@@ -172,15 +182,6 @@
         const directions = [-1,1,-width,width]; //Se pueden mover un cuadro hacia arriba,derecha,abajo,izquierda
         let direction = directions[Math.floor(Math.random() * directions.length)];//direccion aleatoria
         ghost.timerId = setInterval( ()=> { //funcion anonima que se ejecuta cada X milisegundos definidos por ghost.speed
-
-            if(ghost.isScared && celdas[ghost.currentIndex].classList.contains('pacman')){ //Que hacer si se lo come el pacman
-                celdas[ghost.currentIndex].classList.remove(ghost.className,'fantasma','scared-ghost');//lo desaparecemos del lugar
-                ghost.currentIndex = ghost.startIndex; //Lo regresamos a su casa
-                score += 100; //sumamos 100 puntos al score
-                scoreDisplay.innerHTML = score;
-                celdas[ghost.currentIndex].classList.add('fantasma',ghost.className);//Pintamos el fantasma
-                ghostEatenSound.play();
-            }
 
             if(!celdas[ghost.currentIndex + direction].classList.contains('pared') //Si no encuentra pared
             && !celdas[ghost.currentIndex + direction].classList.contains('fantasma')
@@ -204,7 +205,18 @@
             
             checkGameOver();
         }, ghost.speed);
+        ghost.EatenTimer = setInterval( ()=> {
+            if(ghost.isScared && celdas[ghost.currentIndex].classList.contains('pacman')){ //Que hacer si se lo come el pacman
+                celdas[ghost.currentIndex].classList.remove(ghost.className,'fantasma','scared-ghost');//lo desaparecemos del lugar
+                ghost.currentIndex = ghost.startIndex; //Lo regresamos a su casa
+                score += 100; //sumamos 100 puntos al score
+                scoreDisplay.innerHTML = score;
+                celdas[ghost.currentIndex].classList.add('fantasma',ghost.className);//Pintamos el fantasma
+                ghostEatenSound.play();
+            }
+        },10);
     }
+
 
     let startButtonText = document.getElementById('btn-red-text');
     let buttonCount = 0;
@@ -227,7 +239,7 @@
             stopSound.play();
             backgroundSound(false);
         }  
-       displayPopUp({visible:false});
+    displayPopUp({visible:false});
     }
     
     beginSound.addEventListener('ended',()=>ghostNoises.muted=false); //Se espera a que termine la musica para agregar la de fondo.
