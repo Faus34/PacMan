@@ -63,12 +63,13 @@
     let ghosts = [];
     function crearFantasmas(Ghost){
         ghosts = [ //Generamos 6 fantasmas (pueden ser mas)
-        new Ghost('blue',362,600),
-        new Ghost('pinky',364,700),
-        new Ghost('red',366,600),
         new Ghost('orange',283,650),
         new Ghost('pinky',336,600),
-        new Ghost('blue',338,700)
+        new Ghost('blue',338,700),
+        new Ghost('blue',362,600),
+        new Ghost('red',366,600),
+        new Ghost('pinky',390,700),
+        new Ghost('orange',392,700)
         ];
 
         ghosts.forEach(ghost => { //funcion para agregar className de cada tipo de fantasma a cuadricula
@@ -207,7 +208,7 @@
 
     let startButtonText = document.getElementById('btn-red-text');
     let buttonCount = 0;
-    
+    let neonPopUp = document.getElementById('neon-popup');
 
     function buttonClicked() {
         startButton = !startButton;
@@ -225,7 +226,8 @@
             startButtonText.innerHTML= 'Start';
             stopSound.play();
             backgroundSound(false);
-        } 
+        }  
+       displayPopUp({visible:false});
     }
     
     beginSound.addEventListener('ended',()=>ghostNoises.muted=false); //Se espera a que termine la musica para agregar la de fondo.
@@ -265,6 +267,7 @@ function checkGameOver(){
             main_scoreboard.innerHTML = 'GAME OVER';
             gameOver = true;
             buttonClicked(); //Pausamos el juego
+            displayPopUp({visible:true,mensaje:'You Lost!'});
             newGame();
         break;
         default:
@@ -274,6 +277,7 @@ function checkGameOver(){
                 main_scoreboard.innerHTML = 'GAME OVER';
                 gameOver = true;
                 buttonClicked(); //Pausamos el juego
+                displayPopUp({visible:true,mensaje:'You Lost!'});
                 newGame();
             }
         break;
@@ -288,6 +292,7 @@ function checkWin(){
         main_scoreboard.innerHTML = 'YOU WON !!';
         gameOver = true;
         buttonClicked(); //cambiamos estado de boton a falso
+        displayPopUp({visible:true,mensaje:'You Won!'});
         newGame();
     }
 }
@@ -330,4 +335,36 @@ function backgroundSound(state){
         ghostNoises.muted = true;
     }
 }
+
+const neonHeader = document.getElementById('neon-header');
+let neonText = document.getElementById('neon-body');
+let nextButtonCounter = 0;
+
+function displayPopUp({visible=false,mensaje=''}){
+    visible? neonPopUp.style.visibility = 'visible' : neonPopUp.style.visibility = 'hidden';
+    // if(visible){
+    //     neonPopUp.style.visibility = 'visible'
+    //     nextButton.style.visibility = 'visible'
+    //     neonHeader.style.display = 'block';
+    // } else {
+    //     neonPopUp.style.visibility = 'hidden';
+    //     nextButton.style.visibility = 'hidden';
+    // }
+    neonHeader.innerHTML = mensaje;
+}
+
+// let nextButton = document.getElementById('next');
+//nextButton.style.visibility = 'visible';
+
+// function nextScreen() {
+//     neonHeader.style.display = 'none';
+//     if(nextButtonCounter<popupContent.length){
+//         neonText.innerHTML = popupContent[nextButtonCounter];
+//         neonText.style.display = 'block';
+//         nextButtonCounter++;
+//     } 
+//     if(nextButtonCounter==popupContent.length){
+//         nextButton.style.visibility = 'hidden';
+//     }
+// }
 
