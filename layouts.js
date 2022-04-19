@@ -67,11 +67,4 @@ let cricket = new Audio();
 cricket.src = 'https://www.myinstants.com/media/sounds/awkward-cricket-sound-effect.mp3';
 cricket.volume = 0.3;
 
-let popupContent = [
-    'Luz, cuando estaba haciendo este juego no paraba de pensar que soy muy afortunado, porque últimamente descubrí que estoy seguro de tres cosas. La primera es que me apasiona lo que hago (aunque aun tenga mucho por aprender).',
-    'La segunda es que definitivamente estoy enamorado de ti. Y la tercera es que eres la compañera perfecta para múltiples aventuras que me gustaría vivir a tu lado.',
-    'No se si fue solo tu hermosa y calida sonrisa o tu tierna mirada también, pero cautivaste mi atención desde el primer día que te vi.',
-    'Afortunadamente he podido conocerte mejor, y me dí cuenta que eres una mujer increíble, cada día que paso a tu lado aprendo un poco más y termino queriendo saber mas de ti.',
-    'Cuando sujeto tu mano y me abrazas siento que arde mi corazón y lo único que puedo pensar es en llenarte de besos.',
-    '¿Quieres ser mi novia?'
-]
+let popupContent = [];
