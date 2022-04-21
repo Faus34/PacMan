@@ -92,8 +92,12 @@
         keyState[e.keyCode || e.which] = false;
     },true);
     
-    //document.addEventListener('keydown',moverPacman);
-
+    let pacmanStyles = document.getElementsByClassName('pacman')[0];
+    function pacmanAnimation (pacmanMoved){
+        pacmanStyles.style.animationPlayState = pacmanMoved?'running':'paused';
+    };
+    //pacmanAnimation(true);
+    
     function moverPacman(){
         if(startButton){
         celdas[pacmanCurrentIndex].classList.remove('pacman');
@@ -144,7 +148,6 @@
                     pacmanNoise.play();
                 }
             }
-            //ghostEaten();
             comerMigaja();
             comerQueso();
         }
