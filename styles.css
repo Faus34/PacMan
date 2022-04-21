@@ -345,12 +345,24 @@ body {
   background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/orange-min.png?alt=media&token=188a6d64-e7dc-4f13-a1e5-b433011a2e3d);
 }
 
+@keyframes pacmanMoves {
+  from {
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pixelPacmanOpen.png?alt=media&token=062b0e4b-eeca-4506-a0f8-df5c876cbfdd);
+  }
+
+  to {
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pixelPacmanClosed.png?alt=media&token=deff4f5e-f5b2-4977-a53c-eea7e08ac044);
+  }
+}
+
 .pacman {
   width: 20px;
   height: 20px;
   background-image: url(https://firebasestorage.googleapis.com/v0/b/pacman-19a45.appspot.com/o/pixelPacmanOpen.png?alt=media&token=062b0e4b-eeca-4506-a0f8-df5c876cbfdd);
   background-repeat: no-repeat;
   background-size: contain;
+  animation: pacmanMoves 0.8s linear infinite;
+  animation-play-state: paused; 
 }
 
 .pacman>div {
